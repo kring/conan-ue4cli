@@ -6,7 +6,7 @@ import json, os
 ${DELEGATE_CLASS}
 
 class ${LIBNAME}Conan(ConanFile):
-    name = "${LIBNAME}"
+    name = "${LIBNAME_LOWER}"
     version = "ue4"
     description = "GENERATED WRAPPER FOR: ${LIBNAME}"
     homepage = "https://github.com/adamrehn/conan-ue4cli"

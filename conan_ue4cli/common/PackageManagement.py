@@ -21,6 +21,7 @@ class PackageManagement(object):
 		Generates and installs a wrapper package
 		'''
 		conanfile = template.replace('${LIBNAME}', libName)
+		conanfile = conanfile.replace('${LIBNAME_LOWER}', libName.lower())
 		conanfile = conanfile.replace('${DELEGATE_CLASS}', delegates.getDelegateClass(libName))
 		ConanTools.save(join(packageDir, 'conanfile.py'), conanfile)
 		PackageManagement.install(packageDir, channel, profile)
