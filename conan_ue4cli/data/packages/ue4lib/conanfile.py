@@ -22,3 +22,4 @@ class UE4LibConan(ConanFile):
     
     def package_info(self):
         self.env_info.PYTHONPATH.append(self.package_folder)
+        self.cpp_info.includedirs = []
