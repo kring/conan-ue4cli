@@ -14,7 +14,7 @@ class ${LIBNAME}Conan(ConanFile):
     license = "MIT"
     url = "https://github.com/adamrehn/conan-ue4cli/tree/master/conan_ue4cli/data/wrapper_template"
     
-    settings = "os", "compiler", "build_type", "arch"
+    settings = "os", "compiler", "arch"
     requires = ("ue4lib/ue4@adamrehn/profile")
     
     def requirements(self):
@@ -88,3 +88,8 @@ class ${LIBNAME}Conan(ConanFile):
         
         # Perform any package-specific post-info logic
         PackageDelegate.post_info(self)
+
+    def package_id(self):
+        # We'll use the same pre-built binaries no matter the build_type or runtime.
+        del self.info.settings.build_type
+        del self.info.settings.compiler.runtime
