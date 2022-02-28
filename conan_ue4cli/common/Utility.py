@@ -1,5 +1,6 @@
 import glob, importlib.util, json, os, shutil, subprocess, sys, tempfile, time
 from os.path import basename, dirname, exists, isdir, join
+import stat
 
 class Utility(object):
 	'''
@@ -47,7 +48,7 @@ class Utility(object):
 		'''
 		dest = join(destDir, basename(source))
 		if isdir(source):
-			shutil.copytree(source, dest)
+			shutil.copytree(source, dest, dirs_exist_ok=True)
 		else:
 			shutil.copy2(source, dest)
 	
@@ -66,10 +67,14 @@ class Utility(object):
 		'''
 		
 		# Delete the directory if it already exists
-		# (This can sometimes fail arbitrarily under Windows, so retry a few times if it does)
+		# (This can fail to delete read-only files under Windows, so try making the file writeable when that happens)
 		if exists(dirPath):
-			Utility.repeat(lambda: shutil.rmtree(dirPath))
+			def tryRemovingReadonly(func, path, _):
+				os.chmod(path, stat.S_IWRITE)
+				func(path)
 		
+			shutil.rmtree(dirPath, onerror=tryRemovingReadonly)
+
 		# Create the directory and any missing parent directories
 		os.makedirs(dirPath)
 	
