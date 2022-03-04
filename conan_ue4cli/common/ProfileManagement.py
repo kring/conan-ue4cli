@@ -103,7 +103,8 @@ class ProfileManagement(object):
 		
 		# Some platforms have an architecture suffix for their default architecture, whilst others do not
 		defaultArch = {
-			'Linux': 'x86_64-unknown-linux-gnu'
+			'Linux': 'x86_64-unknown-linux-gnu',
+			'Mac': 'x86_64'
 		}
 		
 		targetPlatform = manager.getPlatformIdentifier()
